@@ -70,3 +70,34 @@ g++ -std=c++17 -Wall -Wextra file.cpp -o file
 - Understood difference between throwing exceptions vs returning values
 
 **Confidence level:** [6/10] on terminal workflow
+
+## Session 4: Reading Compiler Errors - COMPLETE
+
+**Practiced with intentionally broken code:**
+
+**error_practice.cpp:**
+- Missing semicolons
+- Learned to read line numbers in errors
+- Fixed errors top to bottom
+
+**error_practice2.cpp:**
+- Undeclared variables ('ar' vs 'arr')
+- Type mismatches (string to int)
+- Learned error messages are specific and helpful
+
+**debug_challenge.cpp:**
+- Found off-by-one error (i <= n should be i < n)
+- Learned to test with actual input
+- Array bounds errors don't always show compiler errors
+
+**Key lessons:**
+- Compiler errors point to exact line numbers
+- Error messages tell you what's wrong
+- Fix errors from top to bottom
+- One error can cascade into many
+- Some bugs compile fine but fail at runtime
+- Read errors carefully - they're helpers
+
+**Time taken:** [25 minutes]
+
+**Confidence with errors:** [7/10]
