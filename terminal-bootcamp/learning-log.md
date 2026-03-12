@@ -101,3 +101,5 @@ g++ -std=c++17 -Wall -Wextra file.cpp -o file
 **Time taken:** [25 minutes]
 
 **Confidence with errors:** [7/10]
+
+#Day 1
