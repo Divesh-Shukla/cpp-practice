@@ -30,7 +30,7 @@ public:
             head = novel;
         }else
         {
-            Node* temp;
+            Node* temp = head;
             while (temp->link!=nullptr)
             {
                 temp = temp->link;
@@ -312,10 +312,264 @@ public:
         head = createNode;
     }
 
+    void insertAtTail(int value){
+        Node* novel = new Node();
+        novel->value = value;
+        novel->next=nullptr;
+        if(head == nullptr)
+        {
+            novel->previous = nullptr;
+            head = novel;
+            tail = novel;
+            return;
+        }else{
+            novel->previous = tail;
+            tail->next = novel;//This is added after identifying bug! This line was not in the first draft of the code!
+            tail = novel;
+            return;
+        }
+    }
+
+    void insertAtPosition(int value, int position){
+        Node* novel = new Node();
+        novel->value = value;
+        if(position == 0 && head == nullptr)
+        {
+            novel->next=nullptr;
+            novel->previous = nullptr;
+            head = novel;
+            tail = novel;
+            return;
+
+        }else if (position==0)
+        {
+            novel->next = head;
+            novel->previous = nullptr;
+            head->previous = novel;
+            head = novel;
+            return;
+        }
+        
+        
+
+        Node* temp = head;
+        for (int i = 0; i < position-1; i++)
+        {
+            if(temp->next!=nullptr)
+            {
+                temp = temp->next;
+            }
+            else
+            {
+                std::cout<<"Position out of bounds!\n";
+                delete novel;
+                return;
+            }
+        }
+        if (temp->next==nullptr && temp == tail)
+        {
+            temp->next = novel;
+            novel->previous = temp;
+            novel->next = nullptr;
+            tail = novel;
+            return;
+        }
+        
+        (temp->next)->previous = novel;
+        novel->next = temp->next;
+        novel->previous = temp;
+        temp->next=novel;
+    }
+
+    void deleteAtHead(){
+        if(head!=nullptr)
+        {
+            if(head->next==nullptr)
+            {
+                delete head;
+                head = nullptr;
+                tail=nullptr;
+                return;
+            }
+            Node* temp = head;
+            head = head->next;
+            head->previous = nullptr;
+            delete temp;
+        }
+
+    }
+
+    void deleteAtTail()
+    {
+        if(head==nullptr){
+            return;
+        }else if(head==tail){
+            delete head;
+            head = nullptr;
+            tail = nullptr;
+        }else
+        {
+            Node* temp = tail;
+            tail = tail->previous;
+            tail->next = nullptr;
+            delete temp;
+        }
+        
+    }
+
+    void deleteAtPosition(int position)
+    {
+        if(head==nullptr)
+        {
+            std::cout<<"Emty LinkedList.\nInvalid deletion operation!";
+            return;
+        }
+        Node* temp = head;
+        for (int i = 0; i < position; i++)
+        {
+            if(temp->next!=nullptr)
+            {
+                temp = temp->next;
+            }else
+            {
+                std::cout<<"Position out of bounds!\n";
+                return;
+            }
+        }
+        if(temp==head)
+        {
+            if (temp->next==nullptr)
+            {
+                head = nullptr;
+                tail = nullptr;
+                delete temp;
+            }else
+            {
+            
+                head = head->next;
+                head->previous = nullptr;
+                delete temp;
+            }
+        }else if(temp == tail)
+        {
+            tail = tail->previous;
+            tail->next = nullptr;
+            delete temp;
+        }else
+        {
+            (temp->next)->previous=temp->previous;
+            (temp->previous)->next = temp->next;
+            delete temp;
+        }
+    }
+
+
+    void printForward()
+    {
+        if(head==nullptr){
+            std::cout<<"Empty linked list!";
+            return;
+        }
+
+        Node* temp = head;
+        int countIndx=0;
+
+        while (temp!=nullptr)
+        {
+            std::cout<<"Element "<<countIndx<<": "<<temp->value<<"\n";
+            countIndx++;
+            temp=temp->next;
+        }
+        
+    }
+
+    void printBackward()
+    {
+        if (head==nullptr)
+        {
+            std::cout<<"Empty linked list!\n";
+            return;
+        }
+        int counter = 0;
+        Node* temp = head;
+        while (temp!=nullptr)
+        {
+            counter++;
+            temp = temp->next;
+        }
+        temp = tail;
+        while(temp!=nullptr)
+        {
+            std::cout<<"Element "<<counter<< ": "<<temp->value<<"\n";
+            counter--;
+            temp=temp->previous;
+        }
+        
+    }
+
+    int search(int value)
+    {
+        int position = 0;
+        Node* temp = head;
+
+        while (temp!=nullptr)
+        {
+            if (temp->value==value)
+            {
+                return position;
+            }else
+            {
+                position++;
+                temp = temp->next;
+            }
+        }
+        return -1;
+    }
+
+    void reversal()
+    {
+        Node* temp = head;
+        while (temp!=nullptr)
+        {
+            Node* temp1 = temp->next;
+            temp->next = temp->previous;
+            temp->previous = temp1;
+            temp = temp1;
+        }
+        
+        temp = head;
+        head = tail;
+        tail = temp;
+
+    }
+
+    ~DoublyLinkedList()
+    {
+        if(head==nullptr)
+        {
+            return;
+        }
+        Node* temp = head;
+        while (temp!= nullptr)
+        {
+            head = head->next;
+            delete temp;
+            temp = head;
+        }
+        
+    }
+    
 
     
 };
 
 int main(){
+
+    LinkedList l;
+    l.insertAtTail(5);
+    l.insertAtTail(24);
+    l.insertAtHead(96);
+    l.insertAtTail(54);
+    l.printList();
     return 0;
 }
