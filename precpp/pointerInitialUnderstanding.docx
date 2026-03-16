@@ -1,0 +1,35 @@
+Date:-14 March-2026
+Occassion:- Start of precpp.
+
+Highlighting the initial understanding of pointers!
+Q1. What does int* p; actually create? What is in p right now?
+Ans:- The "*" operator used during initialisation used along with data type is used to declare a pointer named p.
+Right now since the p is only declared and not initialised the pointer has a grabage value. Uninitialise pointers are also called wild pointers.
+
+Q2. What's the difference between p and *p?
+Ans:- The difference between p and *p is that, p is a pointer the value it holds is a memory address of a given variable or some other object in the code.
+ Whereas *p is used to get the object whose address is stored inside p. Here in this situation, in an expression the "*" operator works for dereferncing the pointer. *p behaves exactly as the object whose address it stores.
+
+Q3. Why did my insertAtTail function crash?
+Ans:- To be honest I don't know.
+For reference I'll attach my insertAtTail function for future refernce.
+void insertAtTail(int value){
+        Node* novel = new Node();
+        novel->link = nullptr;
+        novel->value = value;
+
+        if (head == nullptr)
+        {
+            head = novel;
+        }else
+        {
+            Node* temp;
+            while (temp->link!=nullptr)
+            {
+                temp = temp->link;
+            }
+            temp->link = novel;
+        }
+    }
+Okay now I realise my mistake on second look, the temp pointer is uninitialised. And in the following expression I'm trying to derefernce a wild pointer.
+

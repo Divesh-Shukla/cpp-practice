@@ -1,13 +1,13 @@
 #include<iostream>
 
-struct Node{
-    int value;
-    struct Node* link;
-};
-
 class LinkedList{
-public:
+private:
+    struct Node{
+        int value;
+        struct Node* link;
+    };
     Node* head;
+public:
 
     LinkedList(){
         head = nullptr;
@@ -187,6 +187,135 @@ public:
         return -1;
     }
     
+    int length(){
+        Node* temp = head;
+        int counter = 0;
+        while (temp!=nullptr)
+        {
+            counter++;
+            temp = temp->link;
+        }
+        return counter;
+    }
 
+    bool hasCycle(){
+        if(head==nullptr){
+            return false;
+        }else if(head->link == nullptr){
+            return false;
+        }
 
+        Node* temp = head;
+        Node* temp1 = head;
+        while (temp!=nullptr && temp1!=nullptr)
+        {
+            temp = temp->link;
+            if(temp1->link!=nullptr){
+                temp1 = (temp1->link)->link;
+            }else{
+                return false;
+            }
+            if(temp==temp1){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // void reverse(){
+    //     if(head==nullptr){return;}
+    //     else if(head->link==nullptr){return;}
+
+    //     Node* prev = nullptr;
+    //     Node* current = head;
+    //     Node* next = head->link;
+    //     while (current!=nullptr)
+    //     {
+    //         if(next!=nullptr){ 
+    //             current->link=prev;
+    //             prev = current;
+    //             current = next;
+    //             next = next->link;
+    //         }else
+    //         {
+    //             current->link=prev;
+    //             prev = current;
+    //             current=next;
+    //         }
+    //     }
+    //     if(prev!=nullptr&& current==nullptr){
+    //         head = prev;
+    //     }
+        
+    // }
+    void reverse(){
+        if(head==nullptr || head->link==nullptr){return;}
+
+        Node* prev = nullptr;
+        Node* current = head;
+        while (current!=nullptr)
+        {
+            Node* next = current->link;
+            current->link=prev;
+            prev = current;
+            current =next;
+        }
+        head = prev;
+        
+    }
+
+    ~LinkedList(){
+        if (head==nullptr)
+        {
+            return;
+        }
+        Node* temp = head;
+        while (temp!=nullptr)
+        {
+            Node* temp2 = temp->link;
+            delete temp;
+            temp = temp2;
+        }
+    }
 };
+
+class DoublyLinkedList{
+private:
+    struct Node
+    {
+        int value;
+        Node* previous;
+        Node* next;
+    };
+    Node* head;
+    Node* tail;
+public:
+
+    DoublyLinkedList(){
+        head = nullptr;
+        tail = nullptr;
+    }
+
+    void insertAtHead(int value){
+        Node* createNode = new Node();
+        createNode->value = value;
+        createNode->previous = nullptr;
+        if (head==nullptr)
+        {
+            head = createNode;
+            createNode->next=nullptr;
+            tail = createNode;
+            return;
+        }
+        head->previous = createNode;
+        createNode->next = head;
+        head = createNode;
+    }
+
+
+    
+};
+
+int main(){
+    return 0;
+}
