@@ -3,7 +3,6 @@
 #include<random>
 
 
-void merge(std::vector<int>&, int, int, int);
 
 void bubbleSort(std::vector<int>& v){
     int n = v.size();
@@ -93,22 +92,23 @@ int partition(std::vector<int>& v, int l, int r){
 int randomPartition(std::vector<int>& v, int l, int r, std::mt19937& rng){
     std::uniform_int_distribution<int> dist(l,r);
     int randIdx = dist(rng);
-    std::swap(v[r],v[randIdx];
+    std::swap(v[r],v[randIdx]);
     int i = l-1;
     int pivot = v[r];
     for(int k = l; k<=r; k++){
         if(v[k]<=pivot){i++;std::swap(v[i],v[k]);
         }else{continue;}
     }
+    return i;
 }
 
-void quickSort(std::vector<int>& v, int l, int r)
+void quickSort(std::vector<int>& v, int l, int r, std::mt19937& rng)
 {
     if(l>=r){return;}
 
-    int indx = partition(v,l,r);
-    quickSort(v,l,indx-1);
-    quickSort(v,indx+1,r);
+    int indx = randomPartition(v,l,r,rng);
+    quickSort(v,l,indx-1,rng);
+    quickSort(v,indx+1,r,rng);
 }
 
 int main(){

@@ -155,4 +155,82 @@ ii)I returned +1 for *str1<*str2
 ACTUAL +1. 
 Half of the code was redundant.
 return *str1-*str2 reduced the code to a great extent.
+
+
+Attempts of strcpy:-
+1:-char* strcpy(char arr1[], char arr2[]){
+    int sizeArr1 = sizeof(arr1)/sizeof(arr1[0]);//it assumes that the size of the arr1 is equal to the number of chars in the array icluding null terminator
+    int sizeArr2 = sizeof(arr2)/sizeof(arr2[0]);
+    if (sizeArr2<sizeArr1)
+    {
+        return;
+    }else
+    {
+        for (int i = 0; i < sizeArr1; i++)
+        {
+            arr2[i] = arr1[i];
+        }
+    }
+return arr2;
+}
+Learnings:- 
+a)We can't use the sizeof operator inside this function as the array is passed using reference and the sizeof operator would hence give sizeof
+pointer.
+Hence the whole code falls.
+
+b)I used return in the above if statement in a function which is supposed to return pointer.  
+
+2:-
+char* strcpy(char arr1[], char arr2[]){
+    int i = 0, j = 0;
+    while (*arr1 != '\0')
+    {
+        arr2[j++]=arr1[i++];
+    }
+    arr2[j]=arr1[i];
+    return arr2;
+}
+
+Learnings:-
+a) here i have mixed two concepts, that is using index and array dereferencing in the same piece of code.
+b)The code checks if the *arr1 != '\0', but since i never move the pointer forward it doesnn't work as arr1[i] = *(arr+i), this never move the pointer
+and the condition remains indefinitely true.
+
+Takeaway:- Never mix indexing and pointer arithmetic.
+
+3:-
+char* strcpy(char dest[], char src[]){
+    int i = 0;
+    while (*src != '\0')
+    {
+        dest[i]=src[i];
+        i++;
+    }
+    dest[i]=src[i];
+    return dest;
+}
+
+Same mistake of mixing.
+
+
+Attempt of strcat:-
+char* my_strcat(char* dest, char* src){
+    while (*dest!='\0')
+    {
+        dest++;
+    }
+    do{
+        *dest = *src;
+        dest++;
+        src++;
+    }while (*src!='\0');
+    *dest='\0';
+    return dest;
+}
+
+Learning:- 
+a) The do while loop can create problem in the case the src string is empty.
+b)In case the src string is empty, the null is copied into the dest and the src,dest pointer is moved frwrd, but just in case let's say the
+src is of only one characted, null and dereferncing the next memory can lead to segmentaion fault.
+c)But i think segementation faults are really easy in all of these string functionss.
 */
