@@ -58,7 +58,7 @@ public:
                     temp1=temp1->link;
                 }else
                 {
-                    std::cerr<<"Position out of bounds!";
+                    std::cerr<<"Position out of bounds!\n";
                     return;
                 }
                 
@@ -165,7 +165,7 @@ public:
             std::cout <<"Position: "<< position++<< "Value: "<<temp->value <<"\n";
             temp = temp->link;
         }
-        
+        std::cout << "\n";
     }
 
     int search(int value){
@@ -566,10 +566,11 @@ public:
 int main(){
 
     LinkedList l;
-    l.insertAtTail(5);
-    l.insertAtTail(24);
-    l.insertAtHead(96);
-    l.insertAtTail(54);
+    l.insertAtHead(5);
+    l.insertAtTail(6);
+    l.insertAtTail(7);
+    l.insertAtPosition(8,3);
     l.printList();
+
     return 0;
 }
