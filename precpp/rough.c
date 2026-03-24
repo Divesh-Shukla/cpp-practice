@@ -1,21 +1,67 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+int my_strlen(char* s)
+{
+    int counter = 0;
+    while (*s!='\0')
+    {
+        s++;
+        counter++;
+    }
+    return counter;
+}
+
+int my_strlen2(char* s)
+{
+    char* c = s;
+    while (*s!='\0')
+    {
+        s++;
+    }
+    return (int)(s-c);
+}
+
+void swap(int* a, int* b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void printArray(int* arr, int size)
+{
+    printf("Array:");
+    int* temp = arr;
+    while(temp < arr+size)
+    {
+        printf(" %d", *temp++);
+    }
+    printf("\n");
+}
 
 int main(){
-    int x = 10;
-    int y,z,a,b;
-    printf("Stack:\n%p\n%p\n%p\n%p\n%p\nHeap:\n", &x,&y,&z,&a,&b);
-    int* p = (int*)malloc(sizeof(int));
-    int* q = (int*)malloc(sizeof(int));
-    int* r = (int*)malloc(sizeof(int));
-    int* s = (int*)malloc(sizeof(int));
-    int* t = (int*)malloc(sizeof(int));
-    printf("%p\n%p\n%p\n%p\n%p\n", p,q,r,s,t);
-    free(p);
-    free(q);
-    free(r);
-    free(s);
-    free(t);
+    int a = 5, b = 6;
+    printf("Pre swap: a = %d, b = %d\n", a, b);
+    swap(&a, &b);
+    printf("Post swap: a = %d, b = %d\n", a, b);
+    
+    int size;
+    printf("Enter the size of the array: ");
+    scanf("%d", &size);
+    int arr[size];
+    printf("Enter the elements of the array: ");
+    for (int i = 0; i < size; i++)
+    {
+        scanf("%d", arr+i);
+    }
+
+    printArray(arr,size);
+
+    char name[] = "Divesh";
+    printf("Length of name string: %d\n", my_strlen2(name));
+    
+    printf("Length of name string: %d\n", my_strlen(name));
+    
     return 0;
 }

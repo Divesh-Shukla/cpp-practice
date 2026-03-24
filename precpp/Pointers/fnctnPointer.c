@@ -22,21 +22,23 @@ int* createint(int n)
 
 int main()
 {
-    // int *p = createInt();
-    // *p = 5;
-    // printf("p: %d\n", *p);
-    // free(p);
+    int *p = createInt();
+    *p = 5;
+    printf("p: %d\n", *p);
+    free(p);
 
-    int *p = createint(5);
-    printf("%d\n", *p);
+    // int *p = createint(5); // This will give a segmentation fault and core dumped message when run.
+    // printf("%d\n", *p);
 
     struct Data d;
     d.value = 5;
     d.character = 'f';
 
-    struct Data* e;
+    struct Data* e = (struct Data*)malloc(sizeof(struct Data)); 
     e->value = 6;
     (*e).character = 's';
+
+    free(e);
 
     return 0;
 }

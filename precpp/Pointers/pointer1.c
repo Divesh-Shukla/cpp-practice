@@ -47,6 +47,13 @@ int main()
     printf("\nWhen p3 points to z\n");
     p3 == NULL ? printf("p3 points to NULL!\n") : printf("*p3: %d\n", *p3);
 
+    //using array name as a pointer!
+    int arr[5];
+    printf("Enter the elements of array: ");
+    for (int i = 0; i < (int)(sizeof(arr)/sizeof(*arr)); i++)
+    {
+        scanf("%d", arr+i);
+    }
     
 
 
