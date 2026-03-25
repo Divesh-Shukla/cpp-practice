@@ -12,14 +12,14 @@ int my_strlen(char* s)
     return counter;
 }
 
-int my_strlen2(char* s)
+size_t my_strlen2(char* s)
 {
     char* c = s;
     while (*s!='\0')
     {
         s++;
     }
-    return (int)(s-c);
+    return s-c;
 }
 
 void swap(int* a, int* b)

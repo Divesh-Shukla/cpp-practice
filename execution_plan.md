@@ -273,7 +273,7 @@ Each: compile `-Wall -Wextra`, fix every warning before next program.
 
 ---
 
-### Day 8 — March 21
+### Day 8 — March 21✅
 **Goal:** Pointer arithmetic — the mechanism behind array traversal
 
 **Theory (10 min):**
@@ -300,7 +300,7 @@ Each: compile `-Wall -Wextra`, fix every warning before next program.
 
 ---
 
-### Day 9 — March 22 — DSA Catch-up + Review
+### Day 9 — March 22 — DSA Catch-up + Review✅
 **Goal:** Begin DSA drills + review pointer fundamentals
 
 **DSA (60 min) — Unit 0.1 Complexity Analysis:**
