@@ -400,7 +400,7 @@ Trigger and catch each:
 7.  Out-of-bounds array access → catch with ASan
 8.  Use-after-free → catch with ASan
 9.  Signed integer overflow: INT_MAX + 1 → catch with UBSan
-10. Uninitialized variable read → catch with UBSan
+10. Uninitialized variable read → catch with UBSan``
 ```
 
 **Problems (20 min):**
