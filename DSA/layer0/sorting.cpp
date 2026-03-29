@@ -16,6 +16,7 @@ void bubbleSort(std::vector<int>& v){
                 swapped = true;
             }
 	}
+    
 	if (!swapped) break;
     }
 }
