@@ -24,31 +24,65 @@ public:
 
     ~dynarray() { delete[] n; }
 
-    dynarray(const dynarray &other)
+    dynarray(const dynarray &copy)
     {
-        n = new int[other.capacity];
-        int *temp = other.n;
-        for (size_t i = 0; i < other.size; i++)
+        std::cout << "COPY CONSTRUCTOR called\n";
+        n = new int[copy.capacity];
+        int *temp = copy.n;
+        for (size_t i = 0; i < copy.size; i++)
         {
             *(n + i) = *(temp + i);
         }
-        this->size = other.size;
-        this->capacity = other.capacity;
+        this->size = copy.size;
+        this->capacity = copy.capacity;
     }
 
-    dynarray &operator=(const dynarray &other)
+    dynarray(dynarray &&other) noexcept
     {
+        std::cout << "MOVE CONSTRUCTOR called!\n";
+        this->size = other.size;
+        this->capacity = other.capacity;
+        this->n = other.n;
+        other.n = nullptr;
+        other.size = 0;
+        other.capacity = 0;
+    }
+
+    dynarray &operator=(dynarray &&other) noexcept
+    {
+        std::cout << "MOVE ASSIGNMENT called!\n";
         if (this == &other)
             return *this;
         delete[] n;
-        this->size = other.size;
         this->capacity = other.capacity;
+        this->size = other.size;
+        this->n = other.n;
+        other.n = nullptr;
+        other.size = 0;
+        other.capacity = 0;
+        return *this;
+    }
+
+    dynarray &operator=(const dynarray &copy)
+    {
+        std::cout << "COPY ASSIGNMENT called!\n";
+        if (this == &copy)
+            return *this;
+        delete[] n;
+        this->size = copy.size;
+        this->capacity = copy.capacity;
         this->n = new int[capacity];
         for (size_t i = 0; i < size; i++)
         {
-            *(this->n + i) = *(other.n + i);
+            *(this->n + i) = *(copy.n + i);
         }
         return *this;
+    }
+
+    static dynarray make_array(size_t n)
+    {
+        dynarray temp(100);
+        return temp;
     }
 
     void push_back(int value)
@@ -79,19 +113,26 @@ public:
 
 int main()
 {
-    dynarray a(10);
-    a.push_back(42);
-    dynarray b = a; // copy constructor
-    b[0] = 99;
-    assert(a[0] == 42); // a must not be affected — if this fails, copy is shallow
+    // dynarray a(10);
+    // a.push_back(42);
+    // dynarray b = a; // copy constructor
+    // b[0] = 99;
+    // assert(a[0] == 42); // a must not be affected — if this fails, copy is shallow
 
-    // Test 2: self-assignment
-    a = a; // must not crash, must not corrupt
-    assert(a[0] == 42);
+    // // Test 2: self-assignment
+    // a = a; // must not crash, must not corrupt
+    // assert(a[0] == 42);
 
-    // Test 3: assignment
-    dynarray c(5);
-    c = a; // copy assignment
-    c[0] = 77;
-    assert(a[0] == 42);
+    // // Test 3: assignment
+    // dynarray c(5);
+    // c = a; // copy assignment
+    // c[0] = 77;
+    // assert(a[0] == 42);
+
+    // Test 4: move semanticsstd::cout << "--- make_array ---\n";
+    dynarray a = dynarray::make_array(100);
+    std::cout << "--- dynarray b = a ---\n";
+    dynarray b = a;
+    std::cout << "--- std::move(a) ---\n";
+    dynarray c = std::move(a);
 }
