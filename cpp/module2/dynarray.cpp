@@ -1,16 +1,17 @@
 #include <iostream>
 #include <cassert>
 
+template <typename T>
 class dynarray
 {
-    int *n;
+    T *n;
     size_t size;
     size_t capacity;
     void resize()
     {
-        int *temp = n;
+        T *temp = n;
         size_t new_capacity = 2 * capacity;
-        n = new int[new_capacity];
+        n = new T[new_capacity];
         for (size_t i = 0; i < size; i++)
         {
             n[i] = temp[i];
@@ -20,15 +21,15 @@ class dynarray
     }
 
 public:
-    dynarray(int n = 1) : size(0), capacity(n), n(new int[n]) {}
+    dynarray(size_t elements = 1) : n(new T[elements]), size(0), capacity(elements) {}
 
     ~dynarray() { delete[] n; }
 
     dynarray(const dynarray &copy)
     {
         std::cout << "COPY CONSTRUCTOR called\n";
-        n = new int[copy.capacity];
-        int *temp = copy.n;
+        n = new T[copy.capacity];
+        T *temp = copy.n;
         for (size_t i = 0; i < copy.size; i++)
         {
             *(n + i) = *(temp + i);
@@ -71,7 +72,7 @@ public:
         delete[] n;
         this->size = copy.size;
         this->capacity = copy.capacity;
-        this->n = new int[capacity];
+        this->n = new T[capacity];
         for (size_t i = 0; i < size; i++)
         {
             *(this->n + i) = *(copy.n + i);
@@ -85,7 +86,7 @@ public:
         return temp;
     }
 
-    void push_back(int value)
+    void push_back(T value)
     {
         if (size < capacity)
         {
@@ -100,7 +101,7 @@ public:
         }
     }
 
-    int &operator[](int i)
+    T &operator[](size_t i)
     {
         return *(n + i);
     }
@@ -113,26 +114,29 @@ public:
 
 int main()
 {
-    // dynarray a(10);
-    // a.push_back(42);
-    // dynarray b = a; // copy constructor
-    // b[0] = 99;
-    // assert(a[0] == 42); // a must not be affected — if this fails, copy is shallow
+    dynarray<int> a(10);
+    a.push_back(42);
+    dynarray<int> b = a; // copy constructor
+    b[0] = 99;
+    assert(a[0] == 42); // a must not be affected — if this fails, copy is shallow
+    std::cout << "Test 1 passed!\n";
 
-    // // Test 2: self-assignment
-    // a = a; // must not crash, must not corrupt
-    // assert(a[0] == 42);
+    // Test 2: self-assignment
+    a = a; // must not crash, must not corrupt
+    assert(a[0] == 42);
+    std::cout << "Test 2 passed!\n";
 
-    // // Test 3: assignment
-    // dynarray c(5);
-    // c = a; // copy assignment
-    // c[0] = 77;
-    // assert(a[0] == 42);
+    // Test 3: assignment
+    dynarray<int> c(5);
+    c = a; // copy assignment
+    c[0] = 77;
+    assert(a[0] == 42);
+    std::cout << "Test 3 passed!\n";
 
     // Test 4: move semanticsstd::cout << "--- make_array ---\n";
-    dynarray a = dynarray::make_array(100);
+    dynarray<int> d = dynarray<int>::make_array(100);
     std::cout << "--- dynarray b = a ---\n";
-    dynarray b = a;
+    dynarray<int> e = d;
     std::cout << "--- std::move(a) ---\n";
-    dynarray c = std::move(a);
+    dynarray<int> f = std::move(d);
 }
