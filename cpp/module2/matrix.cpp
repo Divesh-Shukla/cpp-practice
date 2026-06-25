@@ -1,14 +1,15 @@
 #include <iostream>
 
+template <typename T>
 class matrix
 {
-    double *data;
+    T *data;
     size_t rows, columns;
 
 public:
     matrix(size_t r, size_t c)
     {
-        data = new double[r * c]();
+        data = new T[r * c]();
         rows = r;
         columns = c;
     }
@@ -22,11 +23,21 @@ public:
     {
         this->rows = m.rows;
         this->columns = m.columns;
-        data = new double[rows * columns];
+        data = new T[rows * columns];
         for (size_t i = 0; i < rows * columns; i++)
         {
             data[i] = m.data[i];
         }
+    }
+
+    matrix(matrix &&move) noexcept
+    {
+        this->data = move.data;
+        this->columns = move.columns;
+        this->rows = move.rows;
+        move.rows = 0;
+        move.columns = 0;
+        move.data = nullptr;
     }
 
     matrix &operator=(const matrix &m)
@@ -36,13 +47,27 @@ public:
         delete[] data;
         this->rows = m.rows;
         this->columns = m.columns;
-        data = new double[rows * columns];
+        data = new T[rows * columns];
         for (size_t i = 0; i < rows * columns; i++)
             data[i] = m.data[i];
         return *this;
     }
 
-    double &at(size_t r, size_t c) const
+    matrix &operator=(matrix &&move) noexcept
+    {
+        if (this == &move)
+            return *this;
+        delete[] data;
+        this->data = move.data;
+        this->columns = move.columns;
+        this->rows = move.rows;
+        move.rows = 0;
+        move.columns = 0;
+        move.data = nullptr;
+        return *this;
+    }
+
+    T &at(size_t r, size_t c) const
     {
         return data[(r * columns) + c];
     }
@@ -89,19 +114,19 @@ public:
 
 int main()
 {
-    matrix m1(2, 2);
+    matrix<double> m1(2, 2);
     std::cout << "Enter all the numbers of the m1 matrix in row order: \n";
     for (size_t i = 0; i < m1.Rows(); i++)
         for (size_t j = 0; j < m1.Columns(); j++)
             std::cin >> m1.at(i, j);
 
-    matrix m2(2, 2);
+    matrix<double> m2(2, 2);
     std::cout << "Enter all the numbers of the m2 matrix in row order: \n";
     for (size_t i = 0; i < m2.Rows(); i++)
         for (size_t j = 0; j < m2.Columns(); j++)
             std::cin >> m2.at(i, j);
 
-    matrix m3 = m1 * m2;
+    matrix<double> m3 = m1 * m2;
     std::cout << "m1: \n";
     m1.display();
     std::cout << "m2: \n";
