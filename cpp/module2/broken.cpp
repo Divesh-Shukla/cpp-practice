@@ -13,6 +13,6 @@ public:
 int main()
 {
     brokenArray a(5);
-    brokenArray b = a;
+    brokenArray b = a;`
     return 0;
 }
